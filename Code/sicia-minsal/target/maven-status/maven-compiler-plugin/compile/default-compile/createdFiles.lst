@@ -1,0 +1,5 @@
+com/sem/sicia/dao/AbstractDao.class
+com/sem/sicia/dao/UserDao.class
+com/sem/sicia/controller/LoginController.class
+com/sem/sicia/dto/User.class
+com/sem/sicia/resolver/SiciaResolver.class

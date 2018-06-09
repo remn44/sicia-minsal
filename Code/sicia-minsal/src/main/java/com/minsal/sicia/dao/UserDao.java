@@ -11,6 +11,11 @@ import com.minsal.sicia.dto.User;
 @ViewScoped
 public class UserDao extends AbstractDao<User> implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public UserDao() {
 		super(User.class);
 		// TODO Auto-generated constructor stub

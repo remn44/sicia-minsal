@@ -1,5 +1,7 @@
-com/sem/sicia/dao/AbstractDao.class
-com/sem/sicia/dao/UserDao.class
-com/sem/sicia/controller/LoginController.class
-com/sem/sicia/dto/User.class
-com/sem/sicia/resolver/SiciaResolver.class
+com/minsal/sicia/shiro/realm/SiciaRealm.class
+com/minsal/sicia/dao/UserDao.class
+com/minsal/sicia/resolver/SiciaResolver.class
+com/minsal/sicia/controller/LoginController.class
+com/minsal/sicia/dto/User.class
+com/minsal/sicia/dao/AbstractDao.class
+com/minsal/sicia/shirofaces/FacesAjaxAwareUserFilter.class

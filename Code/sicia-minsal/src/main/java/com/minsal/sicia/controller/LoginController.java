@@ -1,43 +1,50 @@
 package com.minsal.sicia.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
-import com.minsal.sicia.dao.UserDao;
 import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
 
 @ManagedBean(name="loginController")
-@ViewScoped
+@SessionScoped
 public class LoginController implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	public LoginController (){
 	   }
-	
-	private static final long serialVersionUID = 1L;
-	private User userlogged = new User();
-//	private EntityManager em;
-	
-	@ManagedProperty(value="#{userDao}")
-	private UserDao userDao;
-	
 	//Datos a ingresar
 	private String userName;
 	private String userPassword;
+	private User userlogged = new User();
+//	private EntityManager em;
+	
+	private EntityManager em;
+	
+
+    public EntityManager getEm() {
+    		em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
+		return em;
+	}
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
 	
 	@PostConstruct
 	private void onload() {
-		this.userName = "Rene";
-		this.userPassword = "Masin";
+		this.userName = "";
+		this.userPassword = "";
 	}
 	
 	public User getUserlogged() {
@@ -58,44 +65,40 @@ public class LoginController implements Serializable{
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public UserDao getUserDao() {
-		return userDao;
-	}
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
 	
 	
-	public void loginDb() {
-		
-		EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
-		
-		userlogged.setUserName("Rene");
-		userlogged.setUserPassword(MD5("Masin"));
-		
-//		userDao.create(userlogged);
-//		userlogged = em.find(userlogged.getClass(), 1);
-//		userlogged = null;
-//		userlogged = userDao.find(1);
-		userlogged = userDao.find(1);
-		
-		System.out.println(userlogged.getUserName());
-		
-	}
-	
-	public void loginShiro() {
+	public String loginShiro() {
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(this.userName,this.userPassword);
 		
+		FacesContext fContext = FacesContext.getCurrentInstance();
+		ExternalContext extContext = fContext.getExternalContext();
+		
 		try {
 			SecurityUtils.getSubject().login(token);
-			System.out.println("Credenciales correctas");
-		} catch (Exception e) {
+			userlogged = getUser(this.userName);
+//			System.out.println("Credenciales correctas");
+			return "dashboard.xhtml?faces-redirect=true";
+		} catch (AuthenticationException e) {
 			// TODO: handle exception
-			System.out.println("Credenciales incorrectas");
-			e.printStackTrace();
+//			System.out.println("Credenciales incorrectas");
+//			e.printStackTrace();
 		}
-		
+
+		return "login.xhtml?faces-redirect=true";
+	}
+	
+	public String logout() {
+		SecurityUtils.getSubject().logout();
+		FacesContext fContext = FacesContext.getCurrentInstance();
+		ExternalContext extContext = fContext.getExternalContext();
+//		try {
+//			extContext.redirect("faces/login.xhtml");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+        return "login.xhtml?faces-redirect=true";
 	}
 	
 	public String MD5(String md5) {
@@ -108,42 +111,18 @@ public class LoginController implements Serializable{
 		       }
 		        return sb.toString();
 		    } catch (java.security.NoSuchAlgorithmException e) {
+		    	e.printStackTrace();
 		    }
 		    return null;
 		}
 	
-//	   @RequestMapping(value="/login",method= RequestMethod.POST)
-//	    public String login(Model model, @ModelAttribute LoginCommand command, BindingResult errors) {
-//	        loginValidator.validate(command, errors);
-//
-//	        if( errors.hasErrors() ) {
-//	            return showLoginForm(model, command);
-//	        }
-//
-//	        UsernamePasswordToken token = new UsernamePasswordToken(command.getUsername(), command.getPassword(), command.isRememberMe());
-//	        try {
-//	            SecurityUtils.getSubject().login(token);
-//	        } catch (AuthenticationException e) {
-//	            errors.reject( "error.login.generic", "Invalid username or password.  Please try again." );
-//	        }
-//
-//	        if( errors.hasErrors() ) {
-//	            return showLoginForm(model, command);
-//	        } else {
-//	            return "redirect:/s/home";
-//	        }
-//	    }
-//
-//	    @RequestMapping("/logout")
-//	    public String logout() {
-//	        SecurityUtils.getSubject().logout();
-//	        return "redirect:/";
-//	}
 	
-	public void firstStep() {
-		
-		System.out.println(userName + " " + userPassword);
-		loginDb();
-	}
+    public User getUser(String userName) {
+    	EntityManager em =  getEm();
+    	User user = em.createQuery("SELECT u from User u WHERE u.userName = :username", User.class).setParameter("username", userName).getSingleResult();
+    	em.close();
+    	return user;
+    }
+	
 	
 }

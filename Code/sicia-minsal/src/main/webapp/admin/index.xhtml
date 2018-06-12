@@ -18,13 +18,13 @@
     		<p:panelGrid columns="2">
     				
     			<p:outputLabel value="User: "></p:outputLabel>
-    			<p:inputText value="#{loginController.userName}"></p:inputText>
+    			<p:inputText value="#{loginController.userlogged.userName}"></p:inputText>
     			<p:outputLabel value="Password: "></p:outputLabel>
-    			<p:inputText value="#{loginController.userPassword}"></p:inputText>
+    			<p:inputText value="#{loginController.userlogged.userPassword}"></p:inputText>
     			
     		</p:panelGrid>
     		<b:buttonGroup>
-    			<p:commandButton value="Login" actionListener="#{loginController.firstStep}" ajax="false"></p:commandButton>
+    			<p:commandButton value="Login" actionListener="#{loginController.logout}" ajax="false"></p:commandButton>
     		</b:buttonGroup>
     	</h:form>
     

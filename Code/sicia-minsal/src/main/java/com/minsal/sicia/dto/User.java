@@ -21,6 +21,17 @@ public class User {
 	
 	@Column(name = "user_password")
 	private String userPassword;
+	
+	@Column(name = "admin")
+	private String admin;
+	
+	public String getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
 
 	public Integer getId() {
 		return id;

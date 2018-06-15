@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -83,6 +84,8 @@ public class LoginController implements Serializable{
 			// TODO: handle exception
 //			System.out.println("Credenciales incorrectas");
 //			e.printStackTrace();
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Credenciales incorrectas","Credenciales incorrectas");
+			FacesContext.getCurrentInstance().addMessage(null,msg);
 		}
 
 		return "login.xhtml?faces-redirect=true";

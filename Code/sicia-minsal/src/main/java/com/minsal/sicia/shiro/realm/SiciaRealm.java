@@ -63,7 +63,7 @@ public class SiciaRealm extends AuthenticatingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     	
     	Set<String> info = new HashSet<String>();
-    	this.user = loginController.getUserlogged();
+    	this.user = getUser(principals.getPrimaryPrincipal().toString());
     	if(this.user!=null) {
     		if("Y".equals(this.user.getAdmin())) {
         		info.add("ADMIN");

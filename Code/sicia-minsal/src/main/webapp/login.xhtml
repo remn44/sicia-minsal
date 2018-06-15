@@ -12,20 +12,27 @@
     	<title>SICIA - LOGIN</title>
     </h:head>
     <h:body bgcolor="white">
-    	<p:growl id="msgs" showDetail="true" />
-    	<h:form>
     	
-    		<p:panelGrid columns="2">
+    	
+    <p:panel id="basic" header="Ingrese sus credenciales"  style="margin-bottom:20px">
+		
+		<h:form>
+			<p:growl id="msgs" showDetail="true" life="2000"/>
+            <h:panelGrid columns="2" cellpadding="5">
     				
-    			<p:outputLabel value="User: "></p:outputLabel>
-    			<p:inputText value="#{loginController.userName}"></p:inputText>
-    			<p:outputLabel value="Password: "></p:outputLabel>
-    			<p:password value="#{loginController.userPassword}"/>
+    			<p:outputLabel value="Usuario: "/>
+    			<p:inputText value="#{loginController.userName}" required="true" requiredMessage="El campo usuario es requerido."/>
+    			<p:outputLabel value="Contraseña: "/>
+    			<p:password value="#{loginController.userPassword}" required="true" requiredMessage="El campo contraseña es requerido."/>
     			
-    		</p:panelGrid>
-    		<b:buttonGroup>
-    			<h:commandButton value="Login" action="#{loginController.loginShiro}" ajax="false"></h:commandButton>
+    		</h:panelGrid>
+    		<b:buttonGroup style="float: right;">
+    			<b:commandButton value="Ingresar" action="#{loginController.loginShiro}" style="float: right;" look="primary" update="msgs"/>
     		</b:buttonGroup>
     	</h:form>
+    </p:panel>
+    	
+    	
+    		
     </h:body>
 </html>

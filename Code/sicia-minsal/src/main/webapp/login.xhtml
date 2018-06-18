@@ -9,30 +9,47 @@
       xmlns:b="http://bootsfaces.net/ui">
 	
     <h:head>
+    	<link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}"/>
     	<title>SICIA - LOGIN</title>
+    	<style>
+        body{
+            background-image: url("#{resource['img/templateBackground.jpg']}");
+            background-size: cover;
+    		background-repeat: no-repeat; 
+    		background-attachment:fixed;            
+        	}
+    	</style>
     </h:head>
     <h:body bgcolor="white">
-    	
-    	
-    <p:panel id="basic" header="Ingrese sus credenciales"  style="margin-bottom:20px">
-		
-		<h:form>
-			<p:growl id="msgs" showDetail="true" life="2000"/>
-            <h:panelGrid columns="2" cellpadding="5">
-    				
-    			<p:outputLabel value="Usuario: "/>
-    			<p:inputText value="#{loginController.userName}" required="true" requiredMessage="El campo usuario es requerido."/>
-    			<p:outputLabel value="Contraseña: "/>
-    			<p:password value="#{loginController.userPassword}" required="true" requiredMessage="El campo contraseña es requerido."/>
-    			
-    		</h:panelGrid>
-    		<b:buttonGroup style="float: right;">
-    			<b:commandButton value="Ingresar" action="#{loginController.loginShiro}" style="float: right;" look="primary" update="msgs"/>
-    		</b:buttonGroup>
-    	</h:form>
-    </p:panel>
-    	
-    	
-    		
+    	<b:growl animation-enter="animated bounceInRight" animation-exit="animated bounceOutRight" newestOnTop="true" allowDismiss="true"/>
+    <b:container>
+    <b:row>
+    <b:column span="4"/>
+    <b:column span="4">
+	    <b:panel id="basic" title="Ingrese sus credenciales" collapsible="false"  style="opacity: 0.75; height:200px; width: 360px;position:fixed; top: 30%; left:40%;">
+			<b:form>
+	            <b:panelGrid columns="1" width="100%">
+	    			<b:inputText id="userName" value="#{loginController.userName}" required="true" requiredMessage="El campo usuario es requerido."
+	    				placeholder="Usuario">
+	    				<f:facet name="prepend">
+	    					<b:iconAwesome name="fas fa-user"></b:iconAwesome>
+	    				</f:facet>
+	    			</b:inputText>
+	    			<b:inputSecret id="userPass" value="#{loginController.userPassword}" required="true" requiredMessage="El campo contraseña es requerido."
+	    				placeholder="Contraseña">
+	    				<f:facet name="prepend">
+	    					<b:iconAwesome name="fas fa-lock"></b:iconAwesome>
+	    				</f:facet>
+	    			</b:inputSecret>
+	    		</b:panelGrid>
+	    		<b:buttonGroup style="float: right;">
+	    			<b:commandButton value="Ingresar" action="#{loginController.loginShiro}" style="float: right;" look="primary"/>
+	    		</b:buttonGroup>
+	    	</b:form>
+	    </b:panel>
+	</b:column>
+	<b:column span="4"/>
+	</b:row>
+    </b:container>
     </h:body>
 </html>

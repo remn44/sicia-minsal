@@ -9,7 +9,9 @@
       xmlns:b="http://bootsfaces.net/ui">
 	
     <h:head>
-    	<title>SICIA - DASHBOARD</title>
+    	<link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}"/>
+    	<ui:insert name="title">
+    	</ui:insert>
     	<style>
         body{
             background-image: url("#{resource['img/templateBackground.jpg']}");
@@ -20,12 +22,23 @@
     	</style>
     </h:head>
     <h:body bgcolor="white">
-    	<p:growl id="msgs" showDetail="true" />
+    	<b:growl id="msgs" animation-enter="animated bounceInRight" animation-exit="animated bounceOutRight" newestOnTop="true" allowDismiss="true"/>
     	<b:form>
 	    	<b:navBar position="top">
+	    		<b:navbarLinks>
+	    			<b:dropMenu value="Administración">
+		    			<b:navLink href="#{request.contextPath}/faces/admin/inventory/list.xhtml" icon-awesome="fas fa-clipboard" value="Asignar inventarios"/>
+		    			<b:navLink href="#{request.contextPath}/faces/admin/medicines/list.xhtml" icon-awesome="fas fa-archive" value="Administrar medicamentos"/>
+		    			<b:navLink href="#{request.contextPath}/faces/admin/users/list.xhtml" icon-awesome="fas fa-users" value="Administrar usuarios"/>
+	    			</b:dropMenu>
+	    		</b:navbarLinks>
+	    		<b:navbarLinks>
+	    			<b:navCommandLink href="#{request.contextPath}/faces/checkInventory.xhtml" icon-awesome="fas fa-boxes" value="Consultar inventarios"/>
+	    		</b:navbarLinks>
 	    		<b:navbarLinks style="float: right;">
 	    			<b:dropMenu value="Opciones">
-	    				<b:navCommandLink value="Cerrar Cesión" action="#{loginController.logout}"></b:navCommandLink>
+	    				<b:navLink href="#{request.contextPath}/faces/myProfile.xhtml" value="Mi perfil" iconAwesome="fas fa-user-circle"/>
+	    				<b:navCommandLink value="Cerrar sesión" action="#{loginController.logout}" iconAwesome="fas fa-power-off"/>
 	    			</b:dropMenu>
 	    		</b:navbarLinks>
 	    	</b:navBar>

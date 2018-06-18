@@ -24,7 +24,7 @@ import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
 
 public class SiciaRealm extends AuthenticatingRealm {
-	
+	private static String RealName = "_SiciaRealm_";
 	private EntityManager em;
 	private User user;
 	
@@ -53,7 +53,7 @@ public class SiciaRealm extends AuthenticatingRealm {
         this.user = getUser(token.getUsername());
 //        System.out.println(this.getUser().getUserName());
         if( user != null ) {
-            return new SimpleAuthenticationInfo(user.getId(), user.getUserPassword(), user.getUserName());
+            return new SimpleAuthenticationInfo(user.getUserName(),user.getUserPassword(),RealName);
         } else {
             return null;
         }

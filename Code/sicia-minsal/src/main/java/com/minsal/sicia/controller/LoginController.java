@@ -14,9 +14,11 @@ import javax.persistence.EntityManager;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
 
 import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
+import com.minsal.sicia.utils.JsfMessages;
 
 @ManagedBean(name="loginController")
 @SessionScoped
@@ -29,7 +31,6 @@ public class LoginController implements Serializable{
 	private String userName;
 	private String userPassword;
 	private User userlogged = new User();
-//	private EntityManager em;
 	
 	private EntityManager em;
 	
@@ -74,34 +75,24 @@ public class LoginController implements Serializable{
 		
 		FacesContext fContext = FacesContext.getCurrentInstance();
 		ExternalContext extContext = fContext.getExternalContext();
+		fContext.getExternalContext().getFlash().setKeepMessages(true);
 		
 		try {
 			SecurityUtils.getSubject().login(token);
 			userlogged = getUser(this.userName);
-//			System.out.println("Credenciales correctas");
-			return "dashboard.xhtml?faces-redirect=true";
+			JsfMessages.getInstance().addSuccess("Bienvenido "+ userlogged.getUserName());
+			return "/dashboard.xhtml?faces-redirect=true";
 		} catch (AuthenticationException e) {
-			// TODO: handle exception
-//			System.out.println("Credenciales incorrectas");
-//			e.printStackTrace();
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Credenciales incorrectas","Credenciales incorrectas");
-			FacesContext.getCurrentInstance().addMessage(null,msg);
+			JsfMessages.getInstance().addError("Credenciales incorrectas.");
+		}catch(Exception e) {
+			JsfMessages.getInstance().addFatal("Error inesperado, informe al técnico mas cercano.");
 		}
-
-		return "login.xhtml?faces-redirect=true";
+		return "/login.xhtml?faces-redirect=true";
 	}
 	
 	public String logout() {
 		SecurityUtils.getSubject().logout();
-		FacesContext fContext = FacesContext.getCurrentInstance();
-		ExternalContext extContext = fContext.getExternalContext();
-//		try {
-//			extContext.redirect("faces/login.xhtml");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-        return "login.xhtml?faces-redirect=true";
+        return "/login.xhtml?faces-redirect=true";
 	}
 	
 	public String MD5(String md5) {

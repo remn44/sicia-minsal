@@ -74,18 +74,17 @@ public class LoginController implements Serializable{
 		UsernamePasswordToken token = new UsernamePasswordToken(this.userName,this.userPassword);
 		
 		FacesContext fContext = FacesContext.getCurrentInstance();
-		ExternalContext extContext = fContext.getExternalContext();
 		fContext.getExternalContext().getFlash().setKeepMessages(true);
 		
 		try {
 			SecurityUtils.getSubject().login(token);
 			userlogged = getUser(this.userName);
-			JsfMessages.getInstance().addSuccess("Bienvenido "+ userlogged.getUserName());
+			JsfMessages.addSuccess("Bienvenido "+ userlogged.getUserName());
 			return "/dashboard.xhtml?faces-redirect=true";
 		} catch (AuthenticationException e) {
-			JsfMessages.getInstance().addError("Credenciales incorrectas.");
+			JsfMessages.addError("Credenciales incorrectas.");
 		}catch(Exception e) {
-			JsfMessages.getInstance().addFatal("Error inesperado, informe al técnico mas cercano.");
+			JsfMessages.addFatal("Error inesperado, informe al técnico mas cercano.");
 		}
 		return "/login.xhtml?faces-redirect=true";
 	}

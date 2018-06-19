@@ -27,9 +27,13 @@
 		<pattern value="/checkInventory" />
 		<view-id value="/faces/checkInventory.xhtml" />
 	</url-mapping>
+	<url-mapping id="checkInventoryOutputs">
+		<pattern value="/inventoryOutputs" />
+		<view-id value="/faces/checkInventoryOutputs.xhtml" />
+	</url-mapping>
 	<url-mapping id="myProfile">
 		<pattern value="/myProfile" />
 		<view-id value="/faces/myProfile.xhtml" />
-	</url-mapping>
+	</url-mapping>	
 
 </pretty-config>

@@ -28,7 +28,7 @@
     <b:column span="4">
 	    <b:panel id="basic" title="Ingrese sus credenciales" collapsible="false"  style="opacity: 0.75; height:200px; width: 360px;position:fixed; top: 30%; left:40%;">
 			<b:form>
-	            <b:panelGrid columns="1" width="100%">
+	            <b:panelGrid columns="1">
 	    			<b:inputText id="userName" value="#{loginController.userName}" required="true" requiredMessage="El campo usuario es requerido."
 	    				placeholder="Usuario">
 	    				<f:facet name="prepend">
@@ -41,10 +41,10 @@
 	    					<b:iconAwesome name="fas fa-lock"></b:iconAwesome>
 	    				</f:facet>
 	    			</b:inputSecret>
-	    		</b:panelGrid>
-	    		<b:buttonGroup style="float: right;">
-	    			<b:commandButton value="Ingresar" action="#{loginController.loginShiro}" style="float: right;" look="primary"/>
+	    		<b:buttonGroup>
+	    			<b:commandButton value="Ingresar" action="#{loginController.loginShiro}" look="primary" style="width:325px"/>
 	    		</b:buttonGroup>
+	    		</b:panelGrid>
 	    	</b:form>
 	    </b:panel>
 	</b:column>

@@ -11,10 +11,9 @@ import javax.faces.bean.ViewScoped;
 import com.minsal.sicia.dao.AmbulanceDao;
 import com.minsal.sicia.dto.CtlAmbulancia;
 
-@ManagedBean(name="checkInventoryController")
+@ManagedBean(name="checkInventoryOutputsController")
 @ViewScoped
-public class CheckInventoryController {
-	
+public class CheckInventoryOutputsController {
 	private CtlAmbulancia ambulanceSelected;
 	private List<CtlAmbulancia> ambulancesList = new LinkedList<CtlAmbulancia>();
 	
@@ -48,5 +47,4 @@ public class CheckInventoryController {
 	public void prueba() {
 		System.out.println(this.ambulanceSelected.getIdUnidad());
 	}
-	
 }

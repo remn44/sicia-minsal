@@ -15,24 +15,28 @@ import com.minsal.sicia.resolver.SiciaResolver;
 public abstract class AbstractDao<T> {
 	protected Class<T> entityClass;
 	
-	private EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
+//	private EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
 	
 	public AbstractDao(Class<T> entityClass) {
 		this.entityClass = entityClass;
 	}
 
 	protected EntityManager getEntityManager() {
-		return this.em;
+		return SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
 	}
 	
 	public void create(T entity) {
+		EntityManager em = getEntityManager();
 		em.getTransaction().begin();
 		em.persist(entity);
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	public void update(T entity) {
-		getEntityManager().merge(entity);
+		EntityManager em = getEntityManager();
+		em.merge(entity);
+		em.close();
 	}
 
 	public void remove(Integer entityId) {
@@ -43,19 +47,26 @@ public abstract class AbstractDao<T> {
 	}
 
 	public void remove(T entity) {
-		getEntityManager().remove(getEntityManager().merge(entity));
+		EntityManager em = getEntityManager();
+		em.remove(getEntityManager().merge(entity));
+		em.close();
 	}
 
 	public T find(Integer id) {
-		return getEntityManager().find(entityClass, id);
+		EntityManager em = getEntityManager();
+		T object = em.find(entityClass, id);
+		em.close();
+		return object;
 	}
 
 	public List<T> findAll() {
-		CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder()
+		EntityManager em = getEntityManager();
+		CriteriaQuery<T> cq = em.getCriteriaBuilder()
 		        .createQuery(entityClass);
 		cq.select(cq.from(entityClass));
-
-		return getEntityManager().createQuery(cq).getResultList();
+		List<T> list = em.createQuery(cq).getResultList();
+		em.close();
+		return list;
 	}
 
 

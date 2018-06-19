@@ -32,17 +32,10 @@ public class LoginController implements Serializable{
 	private String userPassword;
 	private User userlogged = new User();
 	
-	private EntityManager em;
-	
-
     public EntityManager getEm() {
-    		em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
-		return em;
+		return SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
 	}
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
-	
+
 	@PostConstruct
 	private void onload() {
 		this.userName = "";
@@ -82,6 +75,7 @@ public class LoginController implements Serializable{
 			JsfMessages.addSuccess("Bienvenido "+ userlogged.getUserName());
 			return "/dashboard.xhtml?faces-redirect=true";
 		} catch (AuthenticationException e) {
+			e.printStackTrace();
 			JsfMessages.addError("Credenciales incorrectas.");
 		}catch(Exception e) {
 			JsfMessages.addFatal("Error inesperado, informe al técnico mas cercano.");

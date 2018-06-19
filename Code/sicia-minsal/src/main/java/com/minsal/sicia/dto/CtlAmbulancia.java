@@ -1,19 +1,26 @@
 package com.minsal.sicia.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
-@Table(name="ctl_ambulancia")
-public class Ambulance {
+@Table(name="ctl_ambulancia", schema="ss")
+public class CtlAmbulancia {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +64,30 @@ public class Ambulance {
 	@Column(name="fech_actu")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechActu;
+	
+	@OneToOne
+	@JoinColumn(name="id_inventario")
+	private Inventario idInventario;
+	
+	@OneToMany(mappedBy="idAmbulancia")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Operacion> operaciones;
+	
+	public List<Operacion> getOperaciones() {
+		return operaciones;
+	}
+
+	public void setOperaciones(List<Operacion> operaciones) {
+		this.operaciones = operaciones;
+	}
+
+	public Inventario getIdInventario() {
+		return idInventario;
+	}
+
+	public void setIdInventario(Inventario idInventario) {
+		this.idInventario = idInventario;
+	}
 
 	public Integer getIdAmbulancia() {
 		return idAmbulancia;
@@ -173,10 +204,10 @@ public class Ambulance {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Ambulance)) {
+        if (!(object instanceof CtlAmbulancia)) {
             return false;
         }
-        Ambulance other = (Ambulance) object;
+        CtlAmbulancia other = (CtlAmbulancia) object;
         if ((this.idAmbulancia == null && other.idAmbulancia != null) || (this.idAmbulancia != null && !this.idAmbulancia.equals(other.idAmbulancia))) {
             return false;
         }

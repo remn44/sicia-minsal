@@ -13,25 +13,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
 import com.minsal.sicia.dao.AmbulanceDao;
-import com.minsal.sicia.dto.Ambulance;
+import com.minsal.sicia.dto.CtlAmbulancia;
 import com.minsal.sicia.resolver.SiciaResolver;
 
-@FacesConverter(forClass=Ambulance.class)
+@FacesConverter(forClass=CtlAmbulancia.class)
 	public class AmbulanceConverter implements Converter {
 		
-		
-		private EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
-
 		protected EntityManager getEntityManager() {
-			return this.em;
+			return SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
 		}
 		
-		public List<Ambulance> findAll() {
-			CriteriaQuery<Ambulance> cq = getEntityManager().getCriteriaBuilder()
-			        .createQuery(Ambulance.class);
-			cq.select(cq.from(Ambulance.class));
-
-			return getEntityManager().createQuery(cq).getResultList();
+		public List<CtlAmbulancia> findAll() {
+			EntityManager em = getEntityManager();
+			CriteriaQuery<CtlAmbulancia> cq = em.getCriteriaBuilder()
+			        .createQuery(CtlAmbulancia.class);
+			cq.select(cq.from(CtlAmbulancia.class));
+			List<CtlAmbulancia> list = em.createQuery(cq).getResultList();
+			em.close();
+			return list;
 		}
 		
 		@Override
@@ -42,7 +41,7 @@ import com.minsal.sicia.resolver.SiciaResolver;
 		    System.out.println(submittedValue);
 		    try {
 		    	
-		    	for (Ambulance testItem : findAll()) {
+		    	for (CtlAmbulancia testItem : findAll()) {
 		    		if (testItem.getIdAmbulancia() == Integer.parseInt(submittedValue)) {
 						return testItem;
 					}
@@ -61,8 +60,8 @@ import com.minsal.sicia.resolver.SiciaResolver;
 		        return "";
 		    }
 
-		    if (modelValue instanceof Ambulance) {
-		        return String.valueOf(((Ambulance) modelValue).getIdAmbulancia());
+		    if (modelValue instanceof CtlAmbulancia) {
+		        return String.valueOf(((CtlAmbulancia) modelValue).getIdAmbulancia());
 		    } else {
 		        throw new ConverterException(new FacesMessage(modelValue + " is not a valid Ambulance"));
 		    }

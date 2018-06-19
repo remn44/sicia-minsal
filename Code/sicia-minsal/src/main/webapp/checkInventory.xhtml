@@ -19,7 +19,7 @@
 	    		<b:row>
 	    			<b:column span="2"/>
 	    			<b:column span="8">
-	    				<b:panel style="opacity: 0.90;" title="CONSULTAR INVENTARIO" collapsible="false" look="primary" contentStyle="">
+	    				<b:panel style="opacity: 0.90;" title="CONSULTA DE INVENTARIO" collapsible="false" look="primary" contentStyle="">
 	    					
 	    					<b:form inline="true" id="checkInventoryForm">
 	    						<p:selectOneMenu value="#{checkInventoryController.ambulanceSelected}" required="true" requiredMessage="Debe seleccionar una ambulancia">
@@ -35,6 +35,16 @@
 	    				</b:panel>
 	    				<b:panel rendered="#{checkInventoryController.ambulanceSelected != null}" style="opacity: 0.90;" look="primary" collapsible="false"
 	    						title="Inventario correspondiente a ambulancia #{checkInventoryController.ambulanceSelected.idUnidad}">
+	    						<b:dataTable value="#{checkInventoryController.ambulanceSelected.idInventario.detalleInventarios}" var="item"
+	    									excel="true" pdf="true" copy="true">
+	    							
+	    							<b:dataTableColumn value="#{item.idProducto.nombre}"/>
+	    							<b:dataTableColumn value="#{item.idProducto.descripcion}"/>
+									<b:dataTableColumn value="#{item.idProducto.tipo}"/>
+	    							<b:dataTableColumn value="#{item.cantidad}" label="Cantidad"/>
+	    							<b:dataTableColumn value="#{item.fechavencimiento}" label="Fecha de vencimiento" dataType="date"/>
+	    						</b:dataTable>
+	    						
 	    				</b:panel>
 	    			</b:column>
     				<b:column span="2"/>

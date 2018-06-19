@@ -3,6 +3,12 @@
 	<persistence-unit name="sicia-minsal" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.minsal.sicia.dto.User</class>
+		<class>com.minsal.sicia.dto.CtlInsumo</class>
+		<class>com.minsal.sicia.dto.CtlMedicamento</class>
+		<class>com.minsal.sicia.dto.DetalleInventario</class>
+		<class>com.minsal.sicia.dto.Inventario</class>
+		<class>com.minsal.sicia.dto.Operacion</class>
+		<class>com.minsal.sicia.dto.Producto</class>
 		
 	        <!-- Configuring JDBC Connection -->
 	        <properties>

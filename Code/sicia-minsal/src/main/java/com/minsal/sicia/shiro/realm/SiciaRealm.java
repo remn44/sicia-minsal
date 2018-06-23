@@ -20,21 +20,23 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import com.minsal.sicia.controller.LoginController;
 import com.minsal.sicia.dao.UserDao;
+import com.minsal.sicia.dto.GlbUsuario;
 import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
 
 public class SiciaRealm extends AuthenticatingRealm {
 	private static String RealName = "_SiciaRealm_";
 	private EntityManager em;
-	private User user;
+//	private User user;
+	private GlbUsuario user;
 	
 	@ManagedProperty(value="loginController")
 	private LoginController loginController;
 	
-    public User getUser() {
+    public GlbUsuario getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(GlbUsuario user) {
 		this.user = user;
 	}
 	public EntityManager getEm() {
@@ -53,7 +55,7 @@ public class SiciaRealm extends AuthenticatingRealm {
         this.user = getUser(token.getUsername());
 //        System.out.println(this.getUser().getUserName());
         if( user != null ) {
-            return new SimpleAuthenticationInfo(user.getUserName(),user.getUserPassword(),RealName);
+            return new SimpleAuthenticationInfo(user.getDsUsuario(),user.getDsPass(),RealName);
         } else {
             return null;
         }
@@ -65,7 +67,7 @@ public class SiciaRealm extends AuthenticatingRealm {
     	Set<String> info = new HashSet<String>();
     	this.user = getUser(principals.getPrimaryPrincipal().toString());
     	if(this.user!=null) {
-    		if("Y".equals(this.user.getAdmin())) {
+    		if("TEC".equals(this.user.getIdPerfil())) {
         		info.add("ADMIN");
     		}
     	}
@@ -74,9 +76,9 @@ public class SiciaRealm extends AuthenticatingRealm {
     }
 
 
-    public User getUser(String userName) {
+    public GlbUsuario getUser(String userName) {
     	EntityManager em = getEm();
-    	User user = em.createQuery("SELECT u from User u WHERE u.userName = :username", User.class).setParameter("username", userName).getSingleResult();
+    	GlbUsuario user = em.createQuery("SELECT u from GlbUsuario u WHERE u.dsUsuario = :username", GlbUsuario.class).setParameter("username", userName).getSingleResult();
     	em.close();
     	return user;
     }

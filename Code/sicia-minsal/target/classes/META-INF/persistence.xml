@@ -9,6 +9,7 @@
 		<class>com.minsal.sicia.dto.Inventario</class>
 		<class>com.minsal.sicia.dto.Operacion</class>
 		<class>com.minsal.sicia.dto.Producto</class>
+		<class>com.minsal.sicia.dto.GlbUsuario</class>
 		
 	        <!-- Configuring JDBC Connection -->
 	        <properties>

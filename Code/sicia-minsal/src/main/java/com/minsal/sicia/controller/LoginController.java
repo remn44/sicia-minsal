@@ -16,6 +16,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 
+import com.minsal.sicia.dto.GlbUsuario;
 import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
 import com.minsal.sicia.utils.JsfMessages;
@@ -30,7 +31,7 @@ public class LoginController implements Serializable{
 	//Datos a ingresar
 	private String userName;
 	private String userPassword;
-	private User userlogged = new User();
+	private GlbUsuario userlogged = new GlbUsuario();
 	
     public EntityManager getEm() {
 		return SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
@@ -42,10 +43,10 @@ public class LoginController implements Serializable{
 		this.userPassword = "";
 	}
 	
-	public User getUserlogged() {
+	public GlbUsuario getUserlogged() {
 		return userlogged;
 	}
-	public void setUserlogged(User userlogged) {
+	public void setUserlogged(GlbUsuario userlogged) {
 		this.userlogged = userlogged;
 	}
 	public String getUserName() {
@@ -72,7 +73,7 @@ public class LoginController implements Serializable{
 		try {
 			SecurityUtils.getSubject().login(token);
 			userlogged = getUser(this.userName);
-			JsfMessages.addSuccess("Bienvenido "+ userlogged.getUserName());
+			JsfMessages.addSuccess("Bienvenido "+ userlogged.getDsNombre());
 			return "/dashboard.xhtml?faces-redirect=true";
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
@@ -104,9 +105,9 @@ public class LoginController implements Serializable{
 		}
 	
 	
-    public User getUser(String userName) {
+    public GlbUsuario getUser(String userName) {
     	EntityManager em =  getEm();
-    	User user = em.createQuery("SELECT u from User u WHERE u.userName = :username", User.class).setParameter("username", userName).getSingleResult();
+    	GlbUsuario user = em.createQuery("SELECT u from GlbUsuario u WHERE u.dsUsuario = :username", GlbUsuario.class).setParameter("username", userName).getSingleResult();
     	em.close();
     	return user;
     }

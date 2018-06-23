@@ -1,54 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"    
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:f = "http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
-	
-    	<ui:composition template="/template.xhtml">
-    		<ui:define name="title">
-					<title>MINSAL | SICIA | CONSULTAR INVENTARIO</title>
-    		</ui:define>
-    		<ui:define name="contenido">
-	    		<br/>
-	    		<br/>
-	    		<br/>
-	    		<b:row>
-	    			<b:column span="2"/>
-	    			<b:column span="8">
-	    				<b:panel style="opacity: 0.90;" title="CONSULTA DE INVENTARIO" collapsible="false" look="primary" contentStyle="">
-	    					
-	    					<b:form inline="true" id="checkInventoryForm">
-	    						<p:selectOneMenu value="#{checkInventoryController.ambulanceSelected}" required="true" requiredMessage="Debe seleccionar una ambulancia">
-	    							<f:selectItem itemLabel="Seleccione una ambulancia" itemValue="#{null}"></f:selectItem>
-	    							<f:selectItems value="#{checkInventoryController.ambulancesList}"
-	    										var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}">
-	    							</f:selectItems>
-	    						</p:selectOneMenu>
-	    							<b:buttonGroup>
-	    								<b:commandButton action="#{checkInventoryController.prueba}" value="Ver inventario" look="primary" style=" margin-left: 5%;"/>
-	    							</b:buttonGroup>
-	    					</b:form>
-	    				</b:panel>
-	    				<b:panel rendered="#{checkInventoryController.ambulanceSelected != null}" style="opacity: 0.90;" look="primary" collapsible="false"
-	    						title="Inventario correspondiente a ambulancia #{checkInventoryController.ambulanceSelected.idUnidad}">
-	    						<b:dataTable value="#{checkInventoryController.ambulanceSelected.idInventario.detalleInventarios}" var="item"
-	    									excel="true" pdf="true" copy="true">
-	    							
-	    							<b:dataTableColumn value="#{item.idProducto.nombre}"/>
-	    							<b:dataTableColumn value="#{item.idProducto.descripcion}"/>
-									<b:dataTableColumn value="#{item.idProducto.tipo}"/>
-	    							<b:dataTableColumn value="#{item.cantidad}" label="Cantidad"/>
-	    							<b:dataTableColumn value="#{item.fechavencimiento}" label="Fecha de vencimiento" dataType="date"/>
-	    						</b:dataTable>
-	    						
-	    				</b:panel>
-	    			</b:column>
-    				<b:column span="2"/>
-    			</b:row>
-    		</ui:define>
-    	</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<title>MINSAL | SICIA | CONSULTAR INVENTARIO</title>
+	</ui:define>
+	<ui:define name="contenido">
+		<br />
+		<br />
+		<br />
+		<b:row>
+			<b:column span="2" />
+			<b:column span="8">
+				<b:panel style="opacity: 0.90;" title="CONSULTA DE INVENTARIO"
+					collapsible="false" look="primary" contentStyle="">
+
+					<b:form inline="true" id="checkInventoryForm">
+						<p:selectOneMenu
+							value="#{checkInventoryController.ambulanceSelected}"
+							required="true" requiredMessage="Debe seleccionar una ambulancia">
+							<f:selectItem itemLabel="Seleccione una ambulancia"
+								itemValue="#{null}"></f:selectItem>
+							<f:selectItems value="#{checkInventoryController.ambulancesList}"
+								var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}">
+							</f:selectItems>
+						</p:selectOneMenu>
+						<b:buttonGroup>
+							<b:commandButton action="#{checkInventoryController.prueba}"
+								value="Ver inventario" look="primary" style=" margin-left: 5%;" />
+						</b:buttonGroup>
+					</b:form>
+				</b:panel>
+				<b:panel
+					rendered="#{checkInventoryController.ambulanceSelected != null}"
+					style="opacity: 0.90;" look="primary" collapsible="false"
+					title="Inventario correspondiente a ambulancia #{checkInventoryController.ambulanceSelected.idUnidad}">
+					<b:dataTable
+						value="#{checkInventoryController.ambulanceSelected.idInventario.detalleInventarios}"
+						var="item" excel="true" pdf="true">
+
+						<b:dataTableColumn value="#{item.idProducto.nombre}" />
+						<b:dataTableColumn value="#{item.idProducto.descripcion}" />
+						<b:dataTableColumn value="#{item.idProducto.tipo}" />
+						<b:dataTableColumn value="#{item.cantidad}" label="Cantidad" />
+						<b:dataTableColumn value="#{item.fechavencimiento}"
+							label="Fecha de vencimiento" dataType="date" />
+					</b:dataTable>
+
+				</b:panel>
+			</b:column>
+			<b:column span="2" />
+		</b:row>
+	</ui:define>
+</ui:composition>
 </html>

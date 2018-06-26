@@ -3,9 +3,7 @@ package com.minsal.sicia.shiro.realm;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -19,9 +17,7 @@ import org.apache.shiro.realm.AuthenticatingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.minsal.sicia.controller.LoginController;
-import com.minsal.sicia.dao.UserDao;
 import com.minsal.sicia.dto.GlbUsuario;
-import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
 
 public class SiciaRealm extends AuthenticatingRealm {

@@ -23,16 +23,15 @@ public class Inventario implements Serializable {
 	@Column(name="id_inventario")
 	private Integer idInventario;
 
-	@Column(name="id_ambulancia")
-	private Integer idAmbulancia;
-	
-	@OneToOne(mappedBy="idInventario")
-	private CtlAmbulancia ctlAmbulancia;
-
 	//bi-directional many-to-one association to DetalleInventario
 	@OneToMany(mappedBy="inventario")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<DetalleInventario> detalleInventarios;
+
+	//bi-directional one-to-one association to CtlAmbulancia
+	@OneToOne
+	@JoinColumn(name="id_ambulancia")
+	private CtlAmbulancia ctlAmbulancia;
 
 	public Inventario() {
 	}
@@ -43,14 +42,6 @@ public class Inventario implements Serializable {
 
 	public void setIdInventario(Integer idInventario) {
 		this.idInventario = idInventario;
-	}
-
-	public Integer getIdAmbulancia() {
-		return this.idAmbulancia;
-	}
-
-	public void setIdAmbulancia(Integer idAmbulancia) {
-		this.idAmbulancia = idAmbulancia;
 	}
 
 	public List<DetalleInventario> getDetalleInventarios() {
@@ -73,6 +64,14 @@ public class Inventario implements Serializable {
 		detalleInventario.setInventario(null);
 
 		return detalleInventario;
+	}
+
+	public CtlAmbulancia getCtlAmbulancia() {
+		return this.ctlAmbulancia;
+	}
+
+	public void setCtlAmbulancia(CtlAmbulancia ctlAmbulancia) {
+		this.ctlAmbulancia = ctlAmbulancia;
 	}
 
 }

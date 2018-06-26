@@ -2,14 +2,12 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="sicia-minsal" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.minsal.sicia.dto.User</class>
-		<class>com.minsal.sicia.dto.CtlInsumo</class>
+		<class>com.minsal.sicia.dto.GlbUsuario</class>
+		<class>com.minsal.sicia.dto.CtlAmbulancia</class>
 		<class>com.minsal.sicia.dto.CtlMedicamento</class>
 		<class>com.minsal.sicia.dto.DetalleInventario</class>
 		<class>com.minsal.sicia.dto.Inventario</class>
 		<class>com.minsal.sicia.dto.Operacion</class>
-		<class>com.minsal.sicia.dto.Producto</class>
-		<class>com.minsal.sicia.dto.GlbUsuario</class>
 		
 	        <!-- Configuring JDBC Connection -->
 	        <properties>
@@ -31,6 +29,7 @@
 				<property name="hibernate.c3p0.idle_test_period" value="300"/>
 				<property name="hibernate.c3p0.mas_statements" value="0"/>
 				<property name="hibernate.c3p0.timeout" value="1000"/>
+				<property name="hibernate.c3p0.validate" value="true"/>
 	        </properties>
 	</persistence-unit>
 </persistence>

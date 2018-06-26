@@ -24,10 +24,10 @@
 	    					<b:form inline="true" id="checkInventoryOutputsForm">
 	    						<b:datepicker></b:datepicker>
 	    						<b:datepicker></b:datepicker>
-								<p:selectOneMenu>
-	    							<f:selectItem itemLabel="Salidas"/>
-	    							<f:selectItem itemLabel="Entradas"/>
-	    							<f:selectItem itemLabel="Tipo operación"/>
+								<p:selectOneMenu value="#{checkInventoryOutputsController.tipoOperacion}">
+	    							<f:selectItem itemLabel="Salidas" itemValue="S"/>
+	    							<f:selectItem itemLabel="Entradas" itemValue="E"/>
+	    							<f:selectItem itemLabel="Tipo operación" itemValue="N"/>
 	    						</p:selectOneMenu>
 	    						<p:selectOneMenu value="#{checkInventoryOutputsController.ambulanceSelected}" required="true" requiredMessage="Debe seleccionar una ambulancia">
 	    							<f:selectItem itemLabel="Seleccione una ambulancia" itemValue="#{null}"></f:selectItem>
@@ -42,14 +42,14 @@
 	    				</b:panel>
 	    				<b:panel rendered="#{checkInventoryOutputsController.ambulanceSelected != null}" style="opacity: 0.90;" look="primary" collapsible="false"
 	    						title="Operaciones">
-	    						<b:dataTable value="#{checkInventoryOutputsController.ambulanceSelected.operaciones}" var="item"
+	    						<b:dataTable value="#{checkInventoryOutputsController.operaciones}" var="item"
 	    									excel="true" pdf="true">
 	    							
-	    							<b:dataTableColumn value="#{item.idProducto.nombre}"/>
-	    							<b:dataTableColumn value="#{item.idProducto.descripcion}"/>
-									<b:dataTableColumn value="#{item.idProducto.tipo}"/>
+	    							<b:dataTableColumn value="#{item.ctlMedicamento.dsMedicamento}" label="Medicamento"/>
+	    							<b:dataTableColumn value="#{item.ctlMedicamento.dsFormaFarmaceutica}" label="Forma Farmaceutica"/>
 	    							<b:dataTableColumn value="#{item.cantidad}" label="Cantidad"/>
 	    							<b:dataTableColumn value="#{item.tipo}" label="Tipo operación"/>
+	    							<b:dataTableColumn value="#{item.fechaVencProducto}" label="Fecha de vencimiento" dataType="date"/>
 	    							<b:dataTableColumn value="#{item.fechaOperacion}" label="Fecha de operación" dataType="date"/>
 	    						</b:dataTable>
 	    						

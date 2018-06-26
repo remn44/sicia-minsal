@@ -1,23 +1,18 @@
 package com.minsal.sicia.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationException;
 
 import com.minsal.sicia.dto.GlbUsuario;
-import com.minsal.sicia.dto.User;
 import com.minsal.sicia.resolver.SiciaResolver;
 import com.minsal.sicia.utils.JsfMessages;
 

@@ -18,13 +18,9 @@ public class Operacion implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_operacion")
 	private Integer idOperacion;
-	
-	@Column(name="cantidad")
+
 	private Integer cantidad;
 
-	@Column(name="tipo_operacion")
-	private String tipoOperacion;
-	
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_operacion")
 	private Date fechaOperacion;
@@ -33,45 +29,23 @@ public class Operacion implements Serializable {
 	@Column(name="fecha_venc_producto")
 	private Date fechaVencProducto;
 
-//	@Column(name="id_ambulancia")
-//	private Integer idAmbulancia;
-
-//	@Column(name="id_producto")
-//	private Integer idProducto;
+	@Column(name="tipo_operacion")
+	private String tipoOperacion;
 	
-	@ManyToOne
-	@JoinColumn(name="id_ambulancia")
-	private CtlAmbulancia idAmbulancia;
-	
-	@ManyToOne
-	@JoinColumn(name="id_producto")
-	private Producto idProducto;
-
 	@Transient
 	private String tipo;
 	
+	//bi-directional many-to-one association to CtlAmbulancia
+	@ManyToOne
+	@JoinColumn(name="id_ambulancia")
+	private CtlAmbulancia ctlAmbulancia;
+
+	//bi-directional many-to-one association to CtlMedicamento
+	@ManyToOne
+	@JoinColumn(name="id_producto", referencedColumnName="nm_codigo_sinab")
+	private CtlMedicamento ctlMedicamento;
+
 	public Operacion() {
-	}
-
-	public String getTipoOperacion() {
-		return tipoOperacion;
-	}
-
-	public void setTipoOperacion(String tipoOperacion) {
-		this.tipoOperacion = tipoOperacion;
-	}
-
-	public String getTipo() {
-		if("S".equals(this.tipoOperacion)) {
-			tipo = "Salida";
-		}else {
-			tipo = "Entrada";
-		}
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public Integer getIdOperacion() {
@@ -106,20 +80,41 @@ public class Operacion implements Serializable {
 		this.fechaVencProducto = fechaVencProducto;
 	}
 
-	public CtlAmbulancia getIdAmbulancia() {
-		return idAmbulancia;
+	public String getTipoOperacion() {
+		return this.tipoOperacion;
 	}
 
-	public void setIdAmbulancia(CtlAmbulancia idAmbulancia) {
-		this.idAmbulancia = idAmbulancia;
+	public void setTipoOperacion(String tipoOperacion) {
+		this.tipoOperacion = tipoOperacion;
 	}
 
-	public Producto getIdProducto() {
-		return idProducto;
+	public CtlAmbulancia getCtlAmbulancia() {
+		return this.ctlAmbulancia;
 	}
 
-	public void setIdProducto(Producto idProducto) {
-		this.idProducto = idProducto;
+	public void setCtlAmbulancia(CtlAmbulancia ctlAmbulancia) {
+		this.ctlAmbulancia = ctlAmbulancia;
 	}
+
+	public CtlMedicamento getCtlMedicamento() {
+		return this.ctlMedicamento;
+	}
+
+	public void setCtlMedicamento(CtlMedicamento ctlMedicamento) {
+		this.ctlMedicamento = ctlMedicamento;
+	}
+	
+	public String getTipo() {
+		if("S".equals(this.tipoOperacion)) {
+			tipo = "Salida";
+		}else {
+			tipo = "Entrada";
+		}
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+}
 
 }

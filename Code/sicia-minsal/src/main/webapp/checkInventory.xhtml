@@ -42,15 +42,17 @@
 					style="opacity: 0.90;" look="primary" collapsible="false"
 					title="Inventario correspondiente a ambulancia #{checkInventoryController.ambulanceSelected.idUnidad}">
 					<b:dataTable
-						value="#{checkInventoryController.ambulanceSelected.idInventario.detalleInventarios}"
+						value="#{checkInventoryController.ambulanceSelected.inventario.detalleInventarios}"
 						var="item" excel="true" pdf="true">
 
-						<b:dataTableColumn value="#{item.idProducto.nombre}" />
-						<b:dataTableColumn value="#{item.idProducto.descripcion}" />
-						<b:dataTableColumn value="#{item.idProducto.tipo}" />
+						<b:dataTableColumn value="#{item.ctlMedicamento.dsMedicamento}" label="Medicamento"/>
+						<b:dataTableColumn value="#{item.ctlMedicamento.dsFormaFarmaceutica}" label="Forma Farmaceutica"/>
+						<b:dataTableColumn value="#{item.ctlMedicamento.dsConcentracion}" label="Concentración"/>
+						<b:dataTableColumn value="#{item.numeroLote}" label="Numero de lote" />
 						<b:dataTableColumn value="#{item.cantidad}" label="Cantidad" />
-						<b:dataTableColumn value="#{item.fechavencimiento}"
+						<b:dataTableColumn value="#{item.fechaVencimiento}"
 							label="Fecha de vencimiento" dataType="date" />
+						<b:dataTableColumn value="#{item.personaRecibe}" label="Recibido por" />
 					</b:dataTable>
 
 				</b:panel>

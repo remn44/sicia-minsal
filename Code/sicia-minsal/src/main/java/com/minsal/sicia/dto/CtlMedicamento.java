@@ -2,6 +2,7 @@ package com.minsal.sicia.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -32,13 +33,17 @@ public class CtlMedicamento implements Serializable {
 
 	@Column(name="ds_presentacion")
 	private String dsPresentacion;
-
+	
 	@Column(name="nm_codigo_sinab")
 	private String nmCodigoSinab;
 
-	//bi-directional one-to-one association to Producto
-	@OneToOne(mappedBy="ctlMedicamento")
-	private Producto producto;
+	//bi-directional many-to-one association to DetalleInventario
+	@OneToMany(mappedBy="ctlMedicamento")
+	private List<DetalleInventario> detalleInventarios;
+
+	//bi-directional many-to-one association to Operacion
+	@OneToMany(mappedBy="ctlMedicamento")
+	private List<Operacion> operacions;
 
 	public CtlMedicamento() {
 	}
@@ -91,20 +96,57 @@ public class CtlMedicamento implements Serializable {
 		this.dsPresentacion = dsPresentacion;
 	}
 
+	public List<DetalleInventario> getDetalleInventarios() {
+		return this.detalleInventarios;
+	}
+
+	public void setDetalleInventarios(List<DetalleInventario> detalleInventarios) {
+		this.detalleInventarios = detalleInventarios;
+	}
+
+	public DetalleInventario addDetalleInventario(DetalleInventario detalleInventario) {
+		getDetalleInventarios().add(detalleInventario);
+		detalleInventario.setCtlMedicamento(this);
+
+		return detalleInventario;
+	}
+
+	public DetalleInventario removeDetalleInventario(DetalleInventario detalleInventario) {
+		getDetalleInventarios().remove(detalleInventario);
+		detalleInventario.setCtlMedicamento(null);
+
+		return detalleInventario;
+	}
+
+	public List<Operacion> getOperacions() {
+		return this.operacions;
+	}
+
+	public void setOperacions(List<Operacion> operacions) {
+		this.operacions = operacions;
+	}
+
+	public Operacion addOperacion(Operacion operacion) {
+		getOperacions().add(operacion);
+		operacion.setCtlMedicamento(this);
+
+		return operacion;
+	}
+
+	public Operacion removeOperacion(Operacion operacion) {
+		getOperacions().remove(operacion);
+		operacion.setCtlMedicamento(null);
+
+		return operacion;
+	}
+
 	public String getNmCodigoSinab() {
-		return this.nmCodigoSinab;
+		return nmCodigoSinab;
 	}
 
 	public void setNmCodigoSinab(String nmCodigoSinab) {
 		this.nmCodigoSinab = nmCodigoSinab;
 	}
-
-	public Producto getProducto() {
-		return this.producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
+	
 
 }

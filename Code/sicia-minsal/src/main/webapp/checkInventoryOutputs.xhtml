@@ -22,12 +22,17 @@
 	    				<b:panel style="opacity: 0.90;" title="CONSULTA DE OPERACIONES" collapsible="false" look="primary" contentStyle="">
 	    					
 	    					<b:form inline="true" id="checkInventoryOutputsForm">
-	    						<b:datepicker></b:datepicker>
-	    						<b:datepicker></b:datepicker>
-								<p:selectOneMenu value="#{checkInventoryOutputsController.tipoOperacion}">
+	    						<b:datepicker maxDate="#{checkInventoryOutputsController.maxDate}"
+	    							minDate="#{checkInventoryOutputsController.minDate}"
+	    							value="#{checkInventoryOutputsController.iniDate}" readonly="true" label="Fecha inicio:">
+	    							</b:datepicker>
+	    						<b:datepicker maxDate="#{checkInventoryOutputsController.maxDate}"
+	    							minDate="#{checkInventoryOutputsController.minDate}"
+	    							value="#{checkInventoryOutputsController.finDate}" readonly="true" label="Fecha fin:"/>
+								<p:selectOneMenu value="#{checkInventoryOutputsController.tipoOperacion}" label="Seleccione tipo operacion:">
+	    							<f:selectItem itemLabel="Entradas y Salidas" itemValue="N"/>
 	    							<f:selectItem itemLabel="Salidas" itemValue="S"/>
 	    							<f:selectItem itemLabel="Entradas" itemValue="E"/>
-	    							<f:selectItem itemLabel="Tipo operación" itemValue="N"/>
 	    						</p:selectOneMenu>
 	    						<p:selectOneMenu value="#{checkInventoryOutputsController.ambulanceSelected}" required="true" requiredMessage="Debe seleccionar una ambulancia">
 	    							<f:selectItem itemLabel="Seleccione una ambulancia" itemValue="#{null}"></f:selectItem>
@@ -36,12 +41,12 @@
 	    							</f:selectItems>
 	    						</p:selectOneMenu>
 	    						<b:buttonGroup>
-	    							<b:commandButton action="#{checkInventoryOutputsController.prueba}" value="Ver operaciones" look="primary" style=" margin-left: 5%;"/>
+	    							<b:commandButton action="#{checkInventoryOutputsController.filtrarOperaciones}" value="Ver operaciones" look="primary" style=" margin-left: 5%;"/>
 	    						</b:buttonGroup>
 	    					</b:form>
 	    				</b:panel>
 	    				<b:panel rendered="#{checkInventoryOutputsController.ambulanceSelected != null}" style="opacity: 0.90;" look="primary" collapsible="false"
-	    						title="Operaciones">
+	    						title="Operaciones | Ambulancia #{checkInventoryOutputsController.ambulanceSelected.idUnidad}">
 	    						<b:dataTable value="#{checkInventoryOutputsController.operaciones}" var="item"
 	    									excel="true" pdf="true">
 	    							

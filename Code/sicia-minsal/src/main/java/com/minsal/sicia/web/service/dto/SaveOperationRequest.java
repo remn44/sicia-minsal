@@ -24,8 +24,9 @@ public class SaveOperationRequest implements Serializable {
 
 	private Integer idAmbulancia;
 
-	private Integer idProducto;
+	private String idProducto;
 	
+	private Integer idInventario;
 //	@ManyToOne
 //	@JoinColumn(name="id_ambulancia")
 //	private CtlAmbulancia idAmbulancia;
@@ -85,12 +86,20 @@ public class SaveOperationRequest implements Serializable {
 		this.idAmbulancia = idAmbulancia;
 	}
 
-	public Integer getIdProducto() {
+	public String getIdProducto() {
 		return idProducto;
 	}
 
-	public void setIdProducto(Integer idProducto) {
+	public void setIdProducto(String idProducto) {
 		this.idProducto = idProducto;
+	}
+
+	public Integer getIdInventario() {
+		return idInventario;
+	}
+
+	public void setIdInventario(Integer idInventario) {
+		this.idInventario = idInventario;
 	}
 
 //	public CtlAmbulancia getIdAmbulancia() {

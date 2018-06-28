@@ -23,7 +23,10 @@ public class SaveOperationWS {
 		Response response = new Response();
 		EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
 		try {
-			
+			Integer cantidad = request.getCantidad();
+			if("S".equals(request.getTipoOperacion())) {
+				cantidad = -1*cantidad;
+			}
 			em.getTransaction().begin();
 			em.createNativeQuery("INSERT INTO ss.operacion (id_ambulancia,id_producto,cantidad,fecha_venc_producto,fecha_operacion,tipo_operacion) VALUES"
 					+ "(:idAmbulancia,:idProducto,:cant,:fechaVenc,:fechaOper,:tipoOper)")
@@ -34,6 +37,11 @@ public class SaveOperationWS {
 					.setParameter("fechaOper", request.getFechaOperacion())
 					.setParameter("tipoOper", request.getTipoOperacion()).executeUpdate()
 					;
+			em.createNativeQuery("update ss.detalle_inventario set cantidad=cantidad+:cant where corr_producto = :idProducto AND id_inventario = :idInventario")
+								.setParameter("cant", cantidad)
+								.setParameter("idProducto", request.getIdProducto())
+								.setParameter("idInventario", request.getIdInventario())
+								.executeUpdate();
 			em.getTransaction().commit();
 			response.setCode(0);
 			response.setDescription("Exito");

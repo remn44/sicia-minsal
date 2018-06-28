@@ -1,5 +1,7 @@
 package com.minsal.sicia.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,29 +28,52 @@ public class CheckInventoryOutputsController {
 	
 	private String tipoOperacion;
 	
+	private Date maxDate;
+	private Date minDate;
+	private Date iniDate;
+	private Date finDate;
 	@PostConstruct
 	private void onload() {
 		this.ambulancesList = ambulanceDao.findAll();
+		Calendar c = Calendar.getInstance();
+		maxDate = new Date();
+		finDate = maxDate;
+		c.setTime(maxDate);
+		c.add(Calendar.MONTH, -3);
+		minDate = c.getTime();
+		c.add(Calendar.MONTH, 2);
+		iniDate = c.getTime();
 	}
 	
-	public List<Operacion> getOperaciones() {
+	public void filtrarOperaciones() {
 		this.operaciones = ambulanceSelected.getOperaciones();
 		List<Operacion> op = new LinkedList<Operacion>();
-		
-		if("N".equals(tipoOperacion)) {
-			return operaciones;
-		}else {
+		op.clear();
+		for (Operacion operacion : this.operaciones) {
+			if(operacion.getFechaOperacion().equals(iniDate) || operacion.getFechaOperacion().equals(finDate)
+					|| (operacion.getFechaOperacion().before(finDate) && operacion.getFechaOperacion().after(iniDate))) {
+				op.add(operacion);
+			}
+		}
+		this.operaciones.clear();
+		this.operaciones.addAll(op);
+		op.clear();
+		if(!"N".equals(tipoOperacion)) {
 			for (Operacion operacion : this.operaciones) {
 				if(tipoOperacion.equals(operacion.getTipoOperacion())) {
 					op.add(operacion);
 				}
 			}
-			this.operaciones = op;
+			this.operaciones.clear();
+			this.operaciones.addAll(op);
 		}
 		
-		return operaciones;
 	}
 
+	public List<Operacion> getOperaciones() {
+		return this.operaciones;
+	}
+	
 	public void setOperaciones(List<Operacion> operaciones) {
 		this.operaciones = operaciones;
 	}
@@ -81,6 +106,39 @@ public class CheckInventoryOutputsController {
 	}
 
 	public void prueba() {
-		System.out.println(this.ambulanceSelected.getIdUnidad());
+//		System.out.println(this.ambulanceSelected.getIdUnidad());
 	}
+
+	public Date getMaxDate() {
+		return maxDate;
+	}
+
+	public void setMaxDate(Date maxDate) {
+		this.maxDate = maxDate;
+	}
+
+	public Date getMinDate() {
+		return minDate;
+	}
+
+	public void setMinDate(Date minDate) {
+		this.minDate = minDate;
+	}
+
+	public Date getIniDate() {
+		return iniDate;
+	}
+
+	public void setIniDate(Date iniDate) {
+		this.iniDate = iniDate;
+	}
+
+	public Date getFinDate() {
+		return finDate;
+	}
+
+	public void setFinDate(Date finDate) {
+		this.finDate = finDate;
+	}
+	
 }

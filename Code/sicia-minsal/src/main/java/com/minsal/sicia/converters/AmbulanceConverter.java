@@ -38,7 +38,7 @@ import com.minsal.sicia.resolver.SiciaResolver;
 		    if (submittedValue == null || submittedValue.isEmpty()) {
 		        return null;
 		    }
-		    System.out.println(submittedValue);
+//		    System.out.println(submittedValue);
 		    try {
 		    	
 		    	for (CtlAmbulancia testItem : findAll()) {

@@ -7,7 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.minsal.sicia.dto.Operacion;
 import com.minsal.sicia.resolver.SiciaResolver;
+import com.minsal.sicia.web.service.dto.Operation;
 import com.minsal.sicia.web.service.dto.Response;
 import com.minsal.sicia.web.service.dto.SaveOperationRequest;
 
@@ -21,41 +23,58 @@ public class SaveOperationWS {
 	public Response webService(SaveOperationRequest request){
 		
 		Response response = new Response();
-		EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
+		try {
+			EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
+			em.getTransaction().begin();
+			int idAmbulancia = request.getIdAmbulancia();
+			int idInventario = request.getIdInventario();
+			for (Operation op : request.getOperaciones()) {
+				saveOperation(response, op, em, idAmbulancia, idInventario);
+			}
+			em.getTransaction().commit();
+			em.close();
+		}catch(Exception e) {
+			response.setCode(1);
+			response.setDescription(e.getMessage());
+		}
+		return response;
+		
+	}
+	
+	private void saveOperation(Response response, Operation request, EntityManager em, Integer idAmbulancia, Integer idInventario) {
 		try {
 			Integer cantidad = request.getCantidad();
 			if("S".equals(request.getTipoOperacion())) {
 				cantidad = -1*cantidad;
 			}
-			em.getTransaction().begin();
-			em.createNativeQuery("INSERT INTO ss.operacion (id_ambulancia,id_producto,cantidad,fecha_venc_producto,fecha_operacion,tipo_operacion) VALUES"
-					+ "(:idAmbulancia,:idProducto,:cant,:fechaVenc,:fechaOper,:tipoOper)")
-					.setParameter("idAmbulancia", request.getIdAmbulancia())
+			em.createNativeQuery("INSERT INTO ss.operacion (id_ambulancia,id_producto,cantidad,fecha_venc_producto,fecha_operacion,tipo_operacion,fecha_operacion_registrada) VALUES"
+					+ "(:idAmbulancia,:idProducto,:cant,:fechaVenc,CURRENT_TIMESTAMP,:tipoOper, CURRENT_TIMESTAMP)")
+					.setParameter("idAmbulancia", idAmbulancia)
 					.setParameter("idProducto", request.getIdProducto())
 					.setParameter("cant", request.getCantidad())
 					.setParameter("fechaVenc", request.getFechaVencProducto())
-					.setParameter("fechaOper", request.getFechaOperacion())
+//					.setParameter("fechaOper", request.getFechaOperacion())
 					.setParameter("tipoOper", request.getTipoOperacion()).executeUpdate()
 					;
 			em.createNativeQuery("update ss.detalle_inventario set cantidad=cantidad+:cant where corr_producto = :idProducto AND id_inventario = :idInventario")
 								.setParameter("cant", cantidad)
 								.setParameter("idProducto", request.getIdProducto())
-								.setParameter("idInventario", request.getIdInventario())
+								.setParameter("idInventario", idInventario)
 								.executeUpdate();
-			em.getTransaction().commit();
 			response.setCode(0);
 			response.setDescription("Exito");
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			response.setCode(1);
 			response.setDescription(e.getMessage());
-		}finally {
-			em.close();
-		}		
-		
-		return response;
+		}
 		
 	}
 	
 }
+
+
+
+
+
+

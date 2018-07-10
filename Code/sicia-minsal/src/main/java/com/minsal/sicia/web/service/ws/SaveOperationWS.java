@@ -47,14 +47,16 @@ public class SaveOperationWS {
 			if("S".equals(request.getTipoOperacion())) {
 				cantidad = -1*cantidad;
 			}
-			em.createNativeQuery("INSERT INTO ss.operacion (id_ambulancia,id_producto,cantidad,fecha_venc_producto,fecha_operacion,tipo_operacion,fecha_operacion_registrada) VALUES"
-					+ "(:idAmbulancia,:idProducto,:cant,:fechaVenc,CURRENT_TIMESTAMP,:tipoOper, CURRENT_TIMESTAMP)")
+			em.createNativeQuery("INSERT INTO ss.operacion (id_ambulancia,id_producto,cantidad,fecha_venc_producto,fecha_operacion,tipo_operacion,fecha_operacion_registrada,justificacion)"
+					+ " VALUES"
+					+ "(:idAmbulancia,:idProducto,:cant,:fechaVenc,CURRENT_TIMESTAMP,:tipoOper, CURRENT_TIMESTAMP,:justifica)")
 					.setParameter("idAmbulancia", idAmbulancia)
 					.setParameter("idProducto", request.getIdProducto())
 					.setParameter("cant", request.getCantidad())
 					.setParameter("fechaVenc", request.getFechaVencProducto())
 //					.setParameter("fechaOper", request.getFechaOperacion())
-					.setParameter("tipoOper", request.getTipoOperacion()).executeUpdate()
+					.setParameter("tipoOper", request.getTipoOperacion())
+					.setParameter("justifica", request.getJustificacion()).executeUpdate()
 					;
 			em.createNativeQuery("update ss.detalle_inventario set cantidad=cantidad+:cant where corr_producto = :idProducto AND id_inventario = :idInventario")
 								.setParameter("cant", cantidad)

@@ -32,6 +32,9 @@ public class Operacion implements Serializable {
 	@Column(name="tipo_operacion")
 	private String tipoOperacion;
 	
+	@Column(name="justificacion")
+	private String justificacion;
+	
 	@Transient
 	private String tipo;
 	
@@ -117,4 +120,14 @@ public class Operacion implements Serializable {
 		this.tipo = tipo;
 }
 
+	public String getJustificacion() {
+		return justificacion;
+	}
+
+	public void setJustificacion(String justificacion) {
+		this.justificacion = justificacion;
+	}
+
+	
+	
 }

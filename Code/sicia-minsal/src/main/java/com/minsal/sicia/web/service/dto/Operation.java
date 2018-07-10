@@ -16,6 +16,8 @@ public class Operation implements Serializable {
 
 	private String idProducto;
 	
+	private String justificacion;
+	
 	public Operation() {
 	}
 
@@ -59,4 +61,12 @@ public class Operation implements Serializable {
 		this.idProducto = idProducto;
 	}
 
+	public String getJustificacion() {
+		return justificacion;
+	}
+
+	public void setJustificacion(String justificacion) {
+		this.justificacion = justificacion;
+	}
+	
 }

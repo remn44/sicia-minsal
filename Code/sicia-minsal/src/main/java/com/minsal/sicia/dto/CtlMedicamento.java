@@ -2,6 +2,9 @@ package com.minsal.sicia.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -38,10 +41,12 @@ public class CtlMedicamento implements Serializable {
 	private String nmCodigoSinab;
 
 	//bi-directional many-to-one association to DetalleInventario
+	@JsonIgnore
 	@OneToMany(mappedBy="ctlMedicamento")
 	private List<DetalleInventario> detalleInventarios;
 
 	//bi-directional many-to-one association to Operacion
+	@JsonIgnore
 	@OneToMany(mappedBy="ctlMedicamento")
 	private List<Operacion> operacions;
 

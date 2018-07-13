@@ -2,6 +2,9 @@ package com.minsal.sicia.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -65,6 +68,7 @@ public class DetalleInventario implements Serializable {
 	private BigDecimal precioUnitario;
 
 	//bi-directional many-to-one association to Inventario
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="id_inventario")
 	private Inventario inventario;

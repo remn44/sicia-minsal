@@ -6,6 +6,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -61,11 +63,13 @@ public class CtlAmbulancia implements Serializable {
 	private String usuaCrea;
 
 	//bi-directional many-to-one association to Operacion
+	@JsonIgnore
 	@OneToMany(mappedBy="ctlAmbulancia")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Operacion> operaciones;
 
 	//bi-directional one-to-one association to Inventario
+	@JsonIgnore
 	@OneToOne(mappedBy="ctlAmbulancia")
 	private Inventario inventario;
 

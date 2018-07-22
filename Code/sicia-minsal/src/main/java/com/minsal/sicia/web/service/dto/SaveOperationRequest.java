@@ -6,30 +6,30 @@ import java.util.List;
 public class SaveOperationRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer idAmbulancia;
+	private String idAmbulancia;
 	
-	private Integer idInventario;
+//	private Integer idInventario;
 
 	private List<Operation> operaciones;
 
 	public SaveOperationRequest() {
 	}
 
-	public Integer getIdAmbulancia() {
+	public String getIdAmbulancia() {
 		return idAmbulancia;
 	}
 
-	public void setIdAmbulancia(Integer idAmbulancia) {
+	public void setIdAmbulancia(String idAmbulancia) {
 		this.idAmbulancia = idAmbulancia;
 	}
 
-	public Integer getIdInventario() {
-		return idInventario;
-	}
-
-	public void setIdInventario(Integer idInventario) {
-		this.idInventario = idInventario;
-	}
+//	public Integer getIdInventario() {
+//		return idInventario;
+//	}
+//
+//	public void setIdInventario(Integer idInventario) {
+//		this.idInventario = idInventario;
+//	}
 
 	public List<Operation> getOperaciones() {
 		return operaciones;

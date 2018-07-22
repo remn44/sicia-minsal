@@ -7,6 +7,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.hibernate.loader.custom.Return;
+
+import com.minsal.sicia.dto.CtlAmbulancia;
+import com.minsal.sicia.dto.Inventario;
 import com.minsal.sicia.dto.Operacion;
 import com.minsal.sicia.resolver.SiciaResolver;
 import com.minsal.sicia.web.service.dto.Operation;
@@ -25,9 +29,10 @@ public class SaveOperationWS {
 		Response response = new Response();
 		try {
 			EntityManager em = SiciaResolver.getInstance().getEntityManagerFactory().createEntityManager();
+			
 			em.getTransaction().begin();
-			int idAmbulancia = request.getIdAmbulancia();
-			int idInventario = request.getIdInventario();
+			int idAmbulancia = getAmbulanceId(request.getIdAmbulancia(), em);
+			int idInventario = getInventoryId(idAmbulancia, em);
 			for (Operation op : request.getOperaciones()) {
 				saveOperation(response, op, em, idAmbulancia, idInventario);
 			}
@@ -70,6 +75,38 @@ public class SaveOperationWS {
 			response.setCode(1);
 			response.setDescription(e.getMessage());
 		}
+		
+	}
+	
+	private Integer getAmbulanceId(String idAmbulance, EntityManager em) {
+		Integer id = 0;
+		try {
+			CtlAmbulancia ambulancia = em.createQuery("SELECT a FROM CtlAmbulancia a WHERE a.idUnidad=:idAmbulancia",CtlAmbulancia.class)
+														.setParameter("idAmbulancia", idAmbulance)
+														.getSingleResult()
+														;
+			id = ambulancia.getIdAmbulancia();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return id;
+		
+	}
+	
+	private Integer getInventoryId(Integer idAmbulance, EntityManager em) {
+		Integer id = 0;
+		try {
+			Inventario inventario = em.createQuery("SELECT i FROM Inventario i WHERE i.ctlAmbulancia.idAmbulancia=:idAmbulancia",Inventario.class)
+														.setParameter("idAmbulancia", idAmbulance)
+														.getSingleResult()
+														;
+			id = inventario.getIdInventario();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return id;
 		
 	}
 	

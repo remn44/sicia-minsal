@@ -110,6 +110,8 @@ public class Operacion implements Serializable {
 	public String getTipo() {
 		if("S".equals(this.tipoOperacion)) {
 			tipo = "Salida";
+		}else if("A".equals(this.tipoOperacion)){
+			tipo = "Ajuste";
 		}else {
 			tipo = "Entrada";
 		}

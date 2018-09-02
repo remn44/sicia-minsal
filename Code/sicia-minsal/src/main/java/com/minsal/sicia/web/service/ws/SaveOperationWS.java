@@ -1,5 +1,7 @@
 package com.minsal.sicia.web.service.ws;
 
+import java.math.BigDecimal;
+
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -48,10 +50,12 @@ public class SaveOperationWS {
 	
 	private void saveOperation(Response response, Operation request, EntityManager em, Integer idAmbulancia, Integer idInventario) {
 		try {
+			
 			Integer cantidad = request.getCantidad();
-			if("S".equals(request.getTipoOperacion())) {
+			if("S".equals(request.getTipoOperacion()) || "A".equals(request.getTipoOperacion())) {
 				cantidad = -1*cantidad;
 			}
+			
 			em.createNativeQuery("INSERT INTO ss.operacion (id_ambulancia,id_producto,cantidad,fecha_venc_producto,fecha_operacion,tipo_operacion,fecha_operacion_registrada,justificacion)"
 					+ " VALUES"
 					+ "(:idAmbulancia,:idProducto,:cant,:fechaVenc,CURRENT_TIMESTAMP,:tipoOper, CURRENT_TIMESTAMP,:justifica)")
@@ -68,6 +72,21 @@ public class SaveOperationWS {
 								.setParameter("idProducto", request.getIdProducto())
 								.setParameter("idInventario", idInventario)
 								.executeUpdate();
+			
+			BigDecimal cantidadAct = (BigDecimal) em.createNativeQuery("select cantidad from ss.detalle_inventario where corr_producto = :idProducto AND id_inventario = :idInventario")
+								.setParameter("idProducto", request.getIdProducto())
+								.setParameter("idInventario", idInventario)
+								.getSingleResult()
+								;
+			
+			if(cantidadAct.compareTo(new BigDecimal(0)) != 1 ) {
+				em.createNativeQuery("DELETE FROM ss.detalle_inventario WHERE corr_producto = :idProducto AND id_inventario = :idInventario")
+								.setParameter("idProducto", request.getIdProducto())
+								.setParameter("idInventario", idInventario)
+								.executeUpdate()
+								;
+			}
+			
 			response.setCode(0);
 			response.setDescription("Exito");
 		} catch (Exception e) {

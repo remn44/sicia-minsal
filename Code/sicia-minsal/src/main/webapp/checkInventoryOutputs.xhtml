@@ -29,13 +29,15 @@
 	    						<b:datepicker maxDate="#{checkInventoryOutputsController.maxDate}"
 	    							minDate="#{checkInventoryOutputsController.minDate}"
 	    							value="#{checkInventoryOutputsController.finDate}" readonly="true" label="Fecha fin:"/>
-								<p:selectOneMenu value="#{checkInventoryOutputsController.tipoOperacion}" label="Seleccione tipo operacion:">
-	    							<f:selectItem itemLabel="Entradas y Salidas" itemValue="N"/>
+								<p:selectOneMenu value="#{checkInventoryOutputsController.tipoOperacion}" required="true" requiredMessage="Debe seleccionar tipo operación">
+	    							<f:selectItem itemLabel="Seleccione tipo operacion" itemValue="#{null}"/>
 	    							<f:selectItem itemLabel="Salidas" itemValue="S"/>
 	    							<f:selectItem itemLabel="Entradas" itemValue="E"/>
+	    							<f:selectItem itemLabel="Ajustes" itemValue="A"/>
+	    							<f:selectItem itemLabel="Todas" itemValue="N"/>
 	    						</p:selectOneMenu>
 	    						<p:selectOneMenu value="#{checkInventoryOutputsController.ambulanceSelected}" required="true" requiredMessage="Debe seleccionar una ambulancia">
-	    							<f:selectItem itemLabel="Seleccione una ambulancia" itemValue="#{null}"></f:selectItem>
+	    							<f:selectItem itemLabel="Seleccione ambulancia" itemValue="#{null}"></f:selectItem>
 	    							<f:selectItems value="#{checkInventoryOutputsController.ambulancesList}"
 	    										var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}">
 	    							</f:selectItems>
@@ -55,6 +57,7 @@
 	    							<b:dataTableColumn value="#{item.cantidad}" label="Cantidad"/>
 	    							<b:dataTableColumn value="#{item.tipo}" label="Tipo operación"/>
 	    							<b:dataTableColumn value="#{item.justificacion}" label="Justificación"/>
+	    							<b:dataTableColumn value="#{item.ctlMedicamento.unidadMedida}" label="Unidad de medida" />
 	    							<b:dataTableColumn value="#{item.fechaVencProducto}" label="Fecha de vencimiento" dataType="date"/>
 	    							<b:dataTableColumn value="#{item.fechaOperacion}" label="Fecha de operación" dataType="date"/>
 	    						</b:dataTable>

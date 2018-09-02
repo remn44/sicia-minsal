@@ -39,6 +39,9 @@ public class CtlMedicamento implements Serializable {
 	
 	@Column(name="nm_codigo_sinab")
 	private String nmCodigoSinab;
+	
+	@Column(name="unidad_medida")
+	private String unidadMedida;
 
 	//bi-directional many-to-one association to DetalleInventario
 	@JsonIgnore
@@ -152,6 +155,13 @@ public class CtlMedicamento implements Serializable {
 	public void setNmCodigoSinab(String nmCodigoSinab) {
 		this.nmCodigoSinab = nmCodigoSinab;
 	}
-	
 
+	public String getUnidadMedida() {
+		return unidadMedida;
+	}
+
+	public void setUnidadMedida(String unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
+	
 }

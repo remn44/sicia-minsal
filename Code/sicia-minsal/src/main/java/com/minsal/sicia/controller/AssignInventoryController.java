@@ -12,6 +12,7 @@ import com.minsal.sicia.dao.AmbulanceDao;
 import com.minsal.sicia.dao.InventarioDao;
 import com.minsal.sicia.dto.CtlAmbulancia;
 import com.minsal.sicia.dto.Inventario;
+import com.minsal.sicia.utils.JsfMessages;
 
 @ManagedBean(name="assignInventoryController")
 @ViewScoped
@@ -92,6 +93,7 @@ public class AssignInventoryController {
 		inv.setCtlAmbulancia(ctlAmbulancia);
 		inventarioDao.create(inv);
 		this.ambulancesList = null;
+		JsfMessages.addSuccess("Inventario asignado exitosamente.");
 	}
 	
 }

@@ -36,7 +36,7 @@
 	    							<f:selectItem itemLabel="Ajustes" itemValue="A"/>
 	    							<f:selectItem itemLabel="Todas" itemValue="N"/>
 	    						</p:selectOneMenu>
-	    						<p:selectOneMenu value="#{checkInventoryOutputsController.ambulanceSelected}" required="true" requiredMessage="Debe seleccionar una ambulancia">
+	    						<p:selectOneMenu value="#{checkInventoryOutputsController.ambulanceSelected}">
 	    							<f:selectItem itemLabel="Seleccione ambulancia" itemValue="#{null}"></f:selectItem>
 	    							<f:selectItems value="#{checkInventoryOutputsController.ambulancesList}"
 	    										var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}">
@@ -47,7 +47,7 @@
 	    						</b:buttonGroup>
 	    					</b:form>
 	    				</b:panel>
-	    				<b:panel rendered="#{checkInventoryOutputsController.ambulanceSelected != null}" style="opacity: 0.90;" look="primary" collapsible="false"
+	    				<b:panel rendered="#{checkInventoryOutputsController.tipoOperacion != null}" style="opacity: 0.90;" look="primary" collapsible="false"
 	    						title="Operaciones | Ambulancia #{checkInventoryOutputsController.ambulanceSelected.idUnidad}">
 	    						<b:dataTable value="#{checkInventoryOutputsController.operaciones}" var="item"
 	    									excel="true" pdf="true">
@@ -60,6 +60,7 @@
 	    							<b:dataTableColumn value="#{item.ctlMedicamento.unidadMedida}" label="Unidad de medida" />
 	    							<b:dataTableColumn value="#{item.fechaVencProducto}" label="Fecha de vencimiento" dataType="date"/>
 	    							<b:dataTableColumn value="#{item.fechaOperacion}" label="Fecha de operación" dataType="date"/>
+	    							<b:dataTableColumn value="#{item.ctlAmbulancia.idUnidad}" label="Ambulancia"/>
 	    						</b:dataTable>
 	    						
 	    				</b:panel>

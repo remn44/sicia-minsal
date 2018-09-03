@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.minsal.sicia.dao.AmbulanceDao;
+import com.minsal.sicia.dao.OperacionDao;
 import com.minsal.sicia.dto.CtlAmbulancia;
 import com.minsal.sicia.dto.Operacion;
 
@@ -23,6 +24,9 @@ public class CheckInventoryOutputsController {
 	
 	@ManagedProperty(value="#{ambulanceDao}")
 	private AmbulanceDao ambulanceDao;
+	
+	@ManagedProperty(value="#{operacionDao}")
+	private OperacionDao operacionDao;
 	
 	private List<Operacion> operaciones;
 	
@@ -46,18 +50,28 @@ public class CheckInventoryOutputsController {
 	}
 	
 	public void filtrarOperaciones() {
-		this.operaciones = ambulanceSelected.getOperaciones();
+		
+		if(ambulanceSelected == null) {
+			System.out.println("Null");
+			this.operaciones = this.operacionDao.findAll();
+			System.out.println("Cant: " + this.operaciones.size());
+		}else {
+			this.operaciones = ambulanceSelected.getOperaciones();
+		}
+		
 		List<Operacion> op = new LinkedList<Operacion>();
 		op.clear();
 		for (Operacion operacion : this.operaciones) {
 			if(operacion.getFechaOperacion().equals(iniDate) || operacion.getFechaOperacion().equals(finDate)
 					|| (operacion.getFechaOperacion().before(finDate) && operacion.getFechaOperacion().after(iniDate))) {
 				op.add(operacion);
+				System.out.println("Agregando operacion...");
 			}
 		}
 		this.operaciones.clear();
 		this.operaciones.addAll(op);
 		op.clear();
+		System.out.println("cant final: " + this.operaciones.size());
 		if(!"N".equals(tipoOperacion)) {
 			for (Operacion operacion : this.operaciones) {
 				if(tipoOperacion.equals(operacion.getTipoOperacion())) {
@@ -66,7 +80,9 @@ public class CheckInventoryOutputsController {
 			}
 			this.operaciones.clear();
 			this.operaciones.addAll(op);
+			System.out.println("cant final: " + this.operaciones.size());
 		}
+		System.out.println("cant final: " + this.operaciones.size());
 		
 	}
 
@@ -140,5 +156,15 @@ public class CheckInventoryOutputsController {
 	public void setFinDate(Date finDate) {
 		this.finDate = finDate;
 	}
+
+	public OperacionDao getOperacionDao() {
+		return operacionDao;
+	}
+
+	public void setOperacionDao(OperacionDao operacionDao) {
+		this.operacionDao = operacionDao;
+	}
+	
+	
 	
 }

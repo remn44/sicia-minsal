@@ -31,15 +31,15 @@
 	    							value="#{checkInventoryOutputsController.finDate}" readonly="true" label="Fecha fin:"/>
 								<p:selectOneMenu value="#{checkInventoryOutputsController.tipoOperacion}" required="true" requiredMessage="Debe seleccionar tipo operación">
 	    							<f:selectItem itemLabel="Seleccione tipo operacion" itemValue="#{null}"/>
-	    							<f:selectItem itemLabel="Salidas" itemValue="S"/>
-	    							<f:selectItem itemLabel="Entradas" itemValue="E"/>
-	    							<f:selectItem itemLabel="Ajustes" itemValue="A"/>
-	    							<f:selectItem itemLabel="Todas" itemValue="N"/>
+	    							<f:selectItem itemLabel="Salidas" itemValue="S" itemDescription="Mostrará registros de medicamentos consumidos"/>
+	    							<f:selectItem itemLabel="Entradas" itemValue="E" itemDescription="Mostrará registros de ingreso de medicamento"/>
+	    							<f:selectItem itemLabel="Ajustes" itemValue="A" itemDescription="Mostrará registros de ajustes de inventario"/>
+	    							<f:selectItem itemLabel="Todo tipo de operación" itemValue="N" itemDescription="Mostrará todo tipo de operación"/>
 	    						</p:selectOneMenu>
 	    						<p:selectOneMenu value="#{checkInventoryOutputsController.ambulanceSelected}">
-	    							<f:selectItem itemLabel="Seleccione ambulancia" itemValue="#{null}"></f:selectItem>
+	    							<f:selectItem itemLabel="Todas las ambulancias" itemValue="#{null}" itemDescription="Mostrará las operaciones de todas las ambulancias"></f:selectItem>
 	    							<f:selectItems value="#{checkInventoryOutputsController.ambulancesList}"
-	    										var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}">
+	    										var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}" itemDescription="#{item.idInstitucion} - #{item.idBase} - #{item.dsAmbulancia}">
 	    							</f:selectItems>
 	    						</p:selectOneMenu>
 	    						<b:buttonGroup>

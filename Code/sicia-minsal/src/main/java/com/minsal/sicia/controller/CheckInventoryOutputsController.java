@@ -52,9 +52,7 @@ public class CheckInventoryOutputsController {
 	public void filtrarOperaciones() {
 		
 		if(ambulanceSelected == null) {
-			System.out.println("Null");
 			this.operaciones = this.operacionDao.findAll();
-			System.out.println("Cant: " + this.operaciones.size());
 		}else {
 			this.operaciones = ambulanceSelected.getOperaciones();
 		}
@@ -65,13 +63,11 @@ public class CheckInventoryOutputsController {
 			if(operacion.getFechaOperacion().equals(iniDate) || operacion.getFechaOperacion().equals(finDate)
 					|| (operacion.getFechaOperacion().before(finDate) && operacion.getFechaOperacion().after(iniDate))) {
 				op.add(operacion);
-				System.out.println("Agregando operacion...");
 			}
 		}
 		this.operaciones.clear();
 		this.operaciones.addAll(op);
 		op.clear();
-		System.out.println("cant final: " + this.operaciones.size());
 		if(!"N".equals(tipoOperacion)) {
 			for (Operacion operacion : this.operaciones) {
 				if(tipoOperacion.equals(operacion.getTipoOperacion())) {
@@ -80,9 +76,7 @@ public class CheckInventoryOutputsController {
 			}
 			this.operaciones.clear();
 			this.operaciones.addAll(op);
-			System.out.println("cant final: " + this.operaciones.size());
 		}
-		System.out.println("cant final: " + this.operaciones.size());
 		
 	}
 

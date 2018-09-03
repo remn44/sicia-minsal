@@ -10,6 +10,7 @@ public class InventoryDetailsDto {
 	private String id_medicamento;
 	private BigDecimal cantidad;
 	private Date fechaVencimiento;
+	private String unidadMedida;
 	
 	public Integer getIdAmbulancia() {
 		return idAmbulancia;
@@ -41,7 +42,11 @@ public class InventoryDetailsDto {
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
-	
-	
+	public String getUnidadMedida() {
+		return unidadMedida;
+	}
+	public void setUnidadMedida(String unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
 	
 }

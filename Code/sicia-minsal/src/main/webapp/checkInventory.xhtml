@@ -28,7 +28,7 @@
 							<f:selectItem itemLabel="Seleccione una ambulancia"
 								itemValue="#{null}"></f:selectItem>
 							<f:selectItems value="#{checkInventoryController.ambulancesList}"
-								var="item" itemValue="#{item}" itemLabel="#{item.idUnidad}">
+								var="item" itemValue="#{item}" itemLabel="#{item.idUnidad} - #{item.idInstitucion} - #{item.idBase} - #{item.dsAmbulancia}" itemDescription="#{item.idInstitucion} - #{item.idBase} - #{item.dsAmbulancia}">
 							</f:selectItems>
 						</p:selectOneMenu>
 						<b:buttonGroup>

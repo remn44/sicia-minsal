@@ -45,6 +45,7 @@ public class InventoryDetailsWS {
 				 detalleDto.setId_medicamento(detalle.getCtlMedicamento().getNmCodigoSinab());
 				 detalleDto.setIdAmbulancia(inventario.getCtlAmbulancia().getIdAmbulancia());
 				 detalleDto.setIdInventario(inventario.getIdInventario());
+				 detalleDto.setUnidadMedida(detalle.getCtlMedicamento().getUnidadMedida());
 				 detallesInv.add(detalleDto);
 			}
 			
